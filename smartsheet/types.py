@@ -15,10 +15,11 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import collections
 import importlib
 import json
 import logging
+from collections.abc import MutableSequence
+
 import six
 
 from datetime import datetime
@@ -26,7 +27,7 @@ from dateutil.parser import parse
 from enum import Enum
 
 
-class TypedList(collections.MutableSequence):
+class TypedList(MutableSequence):
 
     def __init__(self, item_type):
         self.item_type = item_type
