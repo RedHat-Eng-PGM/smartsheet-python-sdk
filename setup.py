@@ -38,6 +38,18 @@ class PyTest(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
+def scm_config():
+    def scheme(version):
+        if version.distance is None:
+            version.distance = 0
+
+        return version.format_with('{tag}.{distance}')
+
+    return {'version_scheme': scheme,
+            'write_to': "smartsheet/version.py",
+            'local_scheme': 'dirty-tag'}
+
+
 setup(
     name=NAME,
     description='Library that uses Python to connect to Smartsheet services (using API 2.0).',
@@ -60,9 +72,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Office/Business :: Financial :: Spreadsheet',
     ],
-    use_scm_version={
-        'write_to': 'smartsheet/version.py'
-    },
+    use_scm_version=scm_config,
     setup_requires=['setuptools_scm'],
     install_requires=REQUIRES,
     packages=find_packages(),
